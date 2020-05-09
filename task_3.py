@@ -1,6 +1,6 @@
 import sys
 from io import BytesIO
-from util import get_object_size
+from util import get_distance_between
 
 import requests
 from PIL import Image
@@ -55,9 +55,15 @@ org_name = organization["properties"]["CompanyMetaData"]["name"]
 # Адрес организации.
 org_address = organization["properties"]["CompanyMetaData"]["address"]
 # Получаем координаты ответа.
-point = organization["geometry"]["coordinates"]
-org_point = "{0},{1}".format(point[0], point[1])
-
+org_hours = organization["properties"]["CompanyMetaData"]["Hours"]["text"]
+organisation_coordinates = organization["geometry"]["coordinates"]
+org_point = "{0},{1}".format(organisation_coordinates[0], organisation_coordinates[1])
+print('------------------------------')
+print(org_address)
+print(org_name)
+print(org_hours)
+print(get_distance_between(toponym_coodrinates, organisation_coordinates))
+print('------------------------------')
 map_params = {
     'l': 'map',
     'pt': '~'.join(["{0},pm2dgl".format(toponym_point), "{0},pm2dgl".format(org_point)])
